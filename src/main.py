@@ -6,6 +6,8 @@ from src.write_data_in_db import DB
 hh = Parser()
 data = DBManager()
 db = DB()
+
+
 def main():
     db.connect_db()
     data.connect_db()
@@ -18,9 +20,7 @@ def main():
     data.get_all_vacancies()
     data.get_avg_salary()
     data.get_vacancies_with_higher_salary()
-    data.get_vacancies_with_keyword('менеджер')
-
-
+    data.get_vacancies_with_keyword("менеджер")
 
 
 if __name__ == "__main__":
