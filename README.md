@@ -25,8 +25,10 @@
 
 ## Установка проекта: ##
 
-### Клонировать репозиторий из GitHub: ### git clone https://github.com/username/project.git
-### Установить зависимости из файла requirements.txt: ### pip install -r requirements.txt
+### Клонировать репозиторий из GitHub: ###
+git clone https://github.com/username/project.git
+### Установить зависимости из файла requirements.txt: ###
+pip install -r requirements.txt
 
 ## Запуск проекта: ##
 
