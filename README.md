@@ -26,7 +26,7 @@
 ## Установка проекта: ##
 
 ### Клонировать репозиторий из GitHub: ###
-git clone https://github.com/username/project.git
+git clone https://github.com/yuriy0770/Parser_HHru_with_DB.git
 ### Установить зависимости из файла requirements.txt: ###
 pip install -r requirements.txt
 
