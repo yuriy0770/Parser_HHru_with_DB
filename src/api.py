@@ -18,10 +18,8 @@ class Parser:
         """Метод для получения списка вакансий(словарей)"""
         if self.connect():
 
-
             params = {"text": word, "per_page": 100, "area": "1859"}
             responce = requests.get(self.url, params)
             return responce.json()["items"]
         else:
             raise ValueError("Ошибка с интернетом")
-

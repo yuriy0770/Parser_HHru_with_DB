@@ -5,15 +5,19 @@ from psycopg2 import Error
 
 load_dotenv()
 
-PASSWORD=os.getenv('PASSWORD')
+PASSWORD = os.getenv("PASSWORD")
+
 
 class DBManager:
     """Класс для взаимодействия с базой данных"""
+
     def __init__(self):
         self.__conn = None
         self.__cur = None
 
-    def connect_db(self, database="vacancy", user="postgres", password=PASSWORD, host="localhost", port="5432") -> None:
+    def connect_db(
+        self, database="vacancy", user="postgres", password=PASSWORD, host="localhost", port="5432"
+    ) -> None:
         """Подключение к базе данных"""
         try:
             self.__conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
@@ -24,7 +28,9 @@ class DBManager:
     def get_companies_and_vacancies_count(self):
         """получает список всех компаний и количество вакансий у каждой компании."""
         try:
-            self.__cur.execute("SELECT name, COUNT(*) FROM organizations JOIN vacancies on vacancies.company_id = organizations.id GROUP BY name")
+            self.__cur.execute(
+                "SELECT name, COUNT(*) FROM organizations JOIN vacancies on vacancies.company_id = organizations.id GROUP BY name"
+            )
             companies = self.__cur.fetchall()
             for company in companies:
                 print(company[0], ":", company[1])
@@ -44,11 +50,14 @@ class DBManager:
                 )
         except (Exception, Error) as error:
             raise error
+
     def get_avg_salary(self):
         """получает среднюю зарплату по вакансиям"""
         try:
-            self.__cur.execute("""SELECT (AVG(salary_to) + AVG(salary_from)) / 2 as avg_salary
-            FROM vacancies WHERE salary_to > 0 AND salary_from > 0""")
+            self.__cur.execute(
+                """SELECT (AVG(salary_to) + AVG(salary_from)) / 2 as avg_salary
+            FROM vacancies WHERE salary_to > 0 AND salary_from > 0"""
+            )
             avg_salary = self.__cur.fetchone()[0]
             print(f"Средняя зарплата: {avg_salary}")
             return avg_salary
@@ -59,9 +68,7 @@ class DBManager:
         """получает список всех вакансий, у которых зарплата выше средней по всем вакансиям"""
         try:
             avg_sum = self.get_avg_salary()
-            self.__cur.execute(
-                f"SELECT v.vacancy, v.salary_to FROM vacancies v WHERE salary_to > {avg_sum}"
-            )
+            self.__cur.execute(f"SELECT v.vacancy, v.salary_to FROM vacancies v WHERE salary_to > {avg_sum}")
             higher_salaries = self.__cur.fetchall()
             for vacancy in higher_salaries:
                 print(f"Название вакансии: {vacancy[0]}, Зарплата: {vacancy[1]}")
@@ -77,4 +84,3 @@ class DBManager:
                 print(f"Название вакансии: {vacancy[0]}")
         except (Exception, Error) as error:
             raise error
-

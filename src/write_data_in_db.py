@@ -10,12 +10,13 @@ load_dotenv()
 
 PASSWORD = os.getenv("PASSWORD")
 
+
 class DB:
     """Класс создания и заполнения таблиц в базе данных"""
+
     def __init__(self):
         self.__conn = None
         self.__cur = None
-
 
     def connect_db(self) -> None:
         """Подключение к базам данных"""
@@ -53,7 +54,7 @@ class DB:
             )
 
         except (Exception, Error) as error:
-            raise  error
+            raise error
 
     def find_com(self, name: str) -> int:
         """Возвращает id"""
@@ -63,8 +64,6 @@ class DB:
             self.__cur.execute(f"""INSERT INTO organizations (name) VALUES ('{name}') RETURNING id""")
             id_ = self.__cur.fetchone()
         return id_[0]
-
-
 
     def fill_data(self, list_v: List) -> None:
         """Заполнение таблиц"""
@@ -84,11 +83,15 @@ class DB:
                          vacancy
                      )
                      VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-                    (vac["city"], id_, vac["salary_from"], vac['salary_to'], vac["url"], vac["requirements"], vac["vacancy"]),
+                    (
+                        vac["city"],
+                        id_,
+                        vac["salary_from"],
+                        vac["salary_to"],
+                        vac["url"],
+                        vac["requirements"],
+                        vac["vacancy"],
+                    ),
                 )
         except (Exception, Error) as error:
             raise error
-
-
-
-
